@@ -405,26 +405,7 @@ let ds = $('#txt1');
       ease: 'none'
    })
  
-   function tickGSAPWhileHidden(value) {
-      if (value === false) {
-         document.removeEventListener("visibilitychange", tickGSAPWhileHidden.fn);
-         return clearInterval(tickGSAPWhileHidden.id);
-      }
-      const onChange = () => {
-         clearInterval(tickGSAPWhileHidden.id);
-         if (document.hidden) {
-            gsap.ticker.lagSmoothing(0); // keep the time moving forward (don't adjust for lag)
-            tickGSAPWhileHidden.id = setInterval(gsap.ticker.tick, 500);
-         } else {
-            gsap.ticker.lagSmoothing(500, 33); // restore lag smoothing
-         }
-      };
-      document.addEventListener("visibilitychange", onChange);
-      tickGSAPWhileHidden.fn = onChange;
-      onChange(); // in case the document is currently hidden.
-      }
-      
-      tickGSAPWhileHidden(true);
+ 
 
       gsap.set("#scene-4", {
           y: 1.5*speed,
@@ -458,7 +439,12 @@ scene5.to(["#txt1", "#txt2"], {
  
 },0)
 let scene6 = gsap.timeline();
- 
+let s4View = document.querySelector(".MIA642Landscapes");
+let s4VB = s4View.getBBox();
+console.log(s4VB)
+// 600 550 800 50
+// let newView = "" + (s4VB.x+150) + " " + s4VB.y + " " + (s4VB.width -800) + " " + (s4VB.height-800);
+let newView = "600 550 800 50";
 ScrollTrigger.create({
     animation: scene6,
     trigger: ".scrollElement",
@@ -466,6 +452,82 @@ ScrollTrigger.create({
     end: "bottom 100%",
     scrub: 3,
 });
+// var tlWorm = gsap.timeline({
+//    repeat: -1,
+// });
+// tlWorm.add("start");
+scene6.set("#gateDF", {
+   xPercent: 79,
+   scaleX: 1.08,
+   transformOrigin: "50% 50%",
+   yPercent: 17
+})
+scene6.from(["#worm1", "#worm3","#worm2","watertxt"], {
+   transformOrigin: "50% 50%",
+   scale: 0,
+   duration: 3.5,
+   stagger: 0.1
+} 
+ ,3.5)
+scene6.to("#worm1", {
+   transformOrigin: "50% 50%",
+   duration: 8,
+   rotation: "360",
+  
+},1.5)
+scene6.to("#worm2", {
+   transformOrigin: "50% 50%",
+   duration: 8,
+   rotation: "360",
+  
+},1.5)
+gsap.to("#watertxt",{
+   opacity: 0.5,
+   duration: 3.5,
+   
+   transformOrigin: "50% 50%",
+   scaleX: 0.8,
+   scaleY: 0.9,
+   repeat: -1,
+   yoyo: true,
+})
+// tlWorm.to("#worm2", {
+//    transformOrigin: "50% 50%",
+//    duration: 7.5,
+ 
+//    ease: 'none'
+// },"start")
+// tlWorm.to("#worm3", {
+//    transformOrigin: "50% 50%",
+//    duration: 8.5,
+//    rotation: "360",
+ 
+//    ease: 'none'
+// },"start")
+
+// tlWorm.to("#watertxt", {
+//    transformOrigin: "50% 50%",
+//    duration: 8.5,
+//    rotation: "360",
+ 
+//    ease: 'none'
+// },"start")
+
+ 
+// scene6.to(s4View, 1.5,{
+//      attr: {
+//          viewBox: newView
+//      }
+//  },1.5)
+ scene6.to("#scene-4",{
+   scale: 1.8,
+   duration: 5.5,
+   transformOrigin: "60% 20%",
+},1.5)
+scene6.to(".s3-all-rocks", 0.5,{
+   opacity: 0
+
+},0.8)
 scene6.fromTo(".s4-dooranstone", {
    opacity: 0,
  
@@ -480,7 +542,7 @@ scene6.fromTo([".s4-mountainBig"], {
    y: 0,
 },0)
 scene6.fromTo(".s4-float-rocks", {
-   y: 3.5*speed,
+   y: 3.8*speed,
    stagger: 0.25,
  
 }, {
@@ -488,11 +550,35 @@ scene6.fromTo(".s4-float-rocks", {
    y: 0,
 },0.25)
  
- 
+ scene6.to("#door", {
+   scaleX: 0,
+   transformOrigin: "100% 100%",
+   ease: "power2.inOut",
+   duration: 3.5,
+ },1.5)
  
 
  
 
  
  
- 
+ function tickGSAPWhileHidden(value) {
+   if (value === false) {
+      document.removeEventListener("visibilitychange", tickGSAPWhileHidden.fn);
+      return clearInterval(tickGSAPWhileHidden.id);
+   }
+   const onChange = () => {
+      clearInterval(tickGSAPWhileHidden.id);
+      if (document.hidden) {
+         gsap.ticker.lagSmoothing(0); // keep the time moving forward (don't adjust for lag)
+         tickGSAPWhileHidden.id = setInterval(gsap.ticker.tick, 500);
+      } else {
+         gsap.ticker.lagSmoothing(500, 33); // restore lag smoothing
+      }
+   };
+   document.addEventListener("visibilitychange", onChange);
+   tickGSAPWhileHidden.fn = onChange;
+   onChange(); // in case the document is currently hidden.
+   }
+   
+   tickGSAPWhileHidden(true);

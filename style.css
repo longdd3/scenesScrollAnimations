@@ -30,10 +30,13 @@ html,body::-webkit-scrollbar {
     width: 0;
     height: 0
 }
+.trans-scene {
+    fill: #fffbcd;
+}
 .scrollElement {
    
     position: absolute;
-      height: 6000px;
+      height: 10000px;
       width: 100px;
       top: 0;
       z-index: 0;
